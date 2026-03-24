@@ -38,7 +38,7 @@ This setup closes all of those gaps in about 15 minutes.
 
 ## Before You Start
 
-You need three accounts and two apps. None of them cost anything to get started. Do all of this on your laptop before touching the server.
+You need three accounts and two apps. None of them cost anything to get started. Do all of this on your phone and laptop before touching the server.
 
 ### 1. Create a Hetzner Account
 
@@ -57,28 +57,34 @@ Tailscale is the private VPN that connects your devices to your server securely.
 2. Sign up — you can use a Google, Microsoft, or GitHub account
 3. That's it for now. You'll come back to this during Step 4.
 
-### 3. Download Termius
+### 3. Download Termius on Your Phone
 
-Termius is the SSH client you'll use to connect to your server from your laptop (and optionally your phone).
+Termius is the SSH client you'll use to connect to your server. Start with your phone — it's where you'll generate the SSH key and do the initial server setup.
 
-1. Go to [termius.com](https://termius.com) and download the version for your OS
-2. Install and open it
-3. Create a free account when prompted (needed to sync keys across devices)
+1. Install **Termius** from the App Store or Google Play
+2. Open it and create a free account when prompted (needed to sync keys across devices)
+3. Also install Termius on your laptop: [termius.com](https://termius.com) — sign in with the same account so your keys sync automatically
 
-### 4. Download Tailscale on Your Laptop
+### 4. Download Tailscale on Your Phone and Laptop
 
-You'll also need the Tailscale app running on your laptop so it can join the same private network as your server.
+You'll need the Tailscale app on both your phone and laptop so they join the same private network as your server.
 
-1. Go to [tailscale.com/download](https://tailscale.com/download)
-2. Download and install for your OS
-3. Open it and **sign in with the same account** you created in step 2 above
-4. Your laptop is now on your Tailscale network — the server will join it later
+**Phone first:**
+1. Install **Tailscale** from the App Store or Google Play
+2. Open it and **sign in with the same account** you created in step 2 above
+
+**Then laptop:**
+1. Go to [tailscale.com/download](https://tailscale.com/download) and install for your OS
+2. Open it and sign in with the same Tailscale account
+3. Both devices are now on your Tailscale network — the server will join it later
 
 ---
 
 ### 5. Generate Your SSH Key in Termius
 
 SSH keys replace passwords. Instead of typing a secret that can be guessed or stolen in transit, your device holds a cryptographic key that mathematically proves your identity. Anyone without the key simply cannot get in — no matter how many times they try.
+
+Do this on your phone (it will sync to your laptop automatically via your Termius account):
 
 1. Open Termius → **Keychain** → **Keys** → **New Key**
 2. Choose **Ed25519** (smaller and more secure than RSA)
@@ -207,7 +213,7 @@ Fail2ban watches your SSH logs and automatically bans IPs that fail login attemp
 
 **What it does for you:**
 
-Tailscale creates a private encrypted network between all your devices (laptop, phone, server). Once set up:
+Tailscale creates a private encrypted network between all your devices (phone, laptop, server). Once set up:
 
 - Your server gets a stable private IP (starts with `100.`)
 - Traffic between your devices is end-to-end encrypted via WireGuard
@@ -217,7 +223,7 @@ The script will print a URL — open it in your browser to authenticate your ser
 
 **After the script finishes:**
 
-Install Tailscale on your other devices at [tailscale.com/download](https://tailscale.com/download).
+If you followed the pre-setup steps, Tailscale is already on your phone and laptop — they will appear in the same network automatically.
 
 **Optional advanced hardening:**
 
