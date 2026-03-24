@@ -38,21 +38,52 @@ This setup closes all of those gaps in about 15 minutes.
 
 ## Before You Start
 
-### What You Need
+You need three accounts and two apps. None of them cost anything to get started. Do all of this on your laptop before touching the server.
 
-- A Hetzner Cloud account
-- Termius (SSH client) installed on your laptop/phone — [termius.com](https://termius.com)
-- A Tailscale account (free) — [tailscale.com](https://tailscale.com)
-- About 15 minutes
+### 1. Create a Hetzner Account
 
-### Generate Your SSH Key in Termius
+Hetzner is where your server lives.
 
-SSH keys replace passwords. Instead of typing a secret that can be guessed or stolen in transit, your device holds a cryptographic key that mathematically proves your identity.
+1. Go to [hetzner.com/cloud](https://www.hetzner.com/cloud) and click **Get started**
+2. Sign up with your email and verify it
+3. Add a payment method — a CX22 server costs around €4/month
+4. Once in the dashboard, navigate to **Cloud** → your project (or create one)
+
+### 2. Create a Tailscale Account
+
+Tailscale is the private VPN that connects your devices to your server securely.
+
+1. Go to [tailscale.com](https://tailscale.com) and click **Get started free**
+2. Sign up — you can use a Google, Microsoft, or GitHub account
+3. That's it for now. You'll come back to this during Step 4.
+
+### 3. Download Termius
+
+Termius is the SSH client you'll use to connect to your server from your laptop (and optionally your phone).
+
+1. Go to [termius.com](https://termius.com) and download the version for your OS
+2. Install and open it
+3. Create a free account when prompted (needed to sync keys across devices)
+
+### 4. Download Tailscale on Your Laptop
+
+You'll also need the Tailscale app running on your laptop so it can join the same private network as your server.
+
+1. Go to [tailscale.com/download](https://tailscale.com/download)
+2. Download and install for your OS
+3. Open it and **sign in with the same account** you created in step 2 above
+4. Your laptop is now on your Tailscale network — the server will join it later
+
+---
+
+### 5. Generate Your SSH Key in Termius
+
+SSH keys replace passwords. Instead of typing a secret that can be guessed or stolen in transit, your device holds a cryptographic key that mathematically proves your identity. Anyone without the key simply cannot get in — no matter how many times they try.
 
 1. Open Termius → **Keychain** → **Keys** → **New Key**
 2. Choose **Ed25519** (smaller and more secure than RSA)
 3. Give it a name like `hetzner-deploy`
-4. Copy the **public key** — you will paste it into Hetzner
+4. Copy the **public key** — you will paste it into Hetzner in the next step
 
 ### Create Your Server on Hetzner
 
@@ -82,8 +113,8 @@ Before connecting, create a firewall in the Hetzner dashboard:
 Connect to your new server as `root` on port 22 via Termius, then:
 
 ```bash
-git clone https://github.com/AlfCro/VPS.git
-cd VPS/scripts
+git clone https://github.com/AlfCro/hetzner-hardening.git
+cd hetzner-hardening/scripts
 chmod +x *.sh
 ```
 
