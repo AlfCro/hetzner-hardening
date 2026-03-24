@@ -41,6 +41,9 @@ ClientAliveCountMax 2
 AllowUsers ${USERNAME}
 EOF
 
+# Ensure privilege separation directory exists (missing on some Ubuntu setups)
+mkdir -p /run/sshd
+
 sshd -t && echo "SSH config valid." || { echo "SSH config INVALID! Aborting."; exit 1; }
 
 echo "[5/7] Installing essential packages..."
@@ -62,7 +65,8 @@ echo "[6/7] Setting timezone to UTC..."
 timedatectl set-timezone UTC
 
 echo "[7/7] Restarting SSH..."
-systemctl restart sshd
+# Ubuntu 24.04 uses 'ssh' not 'sshd' as the service name
+systemctl restart ssh
 
 header "IMPORTANT: Before closing this session!"
 echo "  1. Open a NEW terminal and test SSH:"
