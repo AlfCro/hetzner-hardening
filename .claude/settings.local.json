@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(echo:*)",
+      "Bash(mkdir:*)",
+      "Bash(git:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet run:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet list:*)",
+      "Bash(dotnet new:*)",
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:learn.microsoft.com)",
+      "WebFetch(domain:icon-sets.iconify.design)"
+    ]
+  }
+}
