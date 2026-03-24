@@ -2,16 +2,17 @@
 
 ## Prerequisites
 
-1. Create VPS on Hetzner with SSH key and firewall attached
-2. Temporarily open port 22 in Hetzner firewall
-3. Connect as `root` on port 22
+1. Generate an Ed25519 key in Termius (Keychain > Keys > Generate)
+2. Create VPS on Hetzner with that SSH key and firewall attached
+3. Temporarily open port 22 in Hetzner firewall
+4. Connect as `root` on port 22 via Termius
 
 ## Getting the Scripts
 
 ```bash
 # On the server as root
-git clone https://github.com/<your-repo>/vps.git
-cd vps/scripts
+git clone https://github.com/AlfCro/VPS.git
+cd VPS/scripts
 chmod +x *.sh
 ```
 
@@ -33,10 +34,7 @@ chmod +x *.sh
 - Installs essential tools (ufw, fail2ban, curl, git, htop, tmux, etc.)
 - Sets timezone to UTC
 
-**CRITICAL:** Before closing this session, open a NEW connection and verify:
-```bash
-ssh deploy@<server-ip> -p 41122
-```
+**CRITICAL:** Before closing this Termius session, open a NEW connection and verify you can connect as `deploy` on port `41122`. Update your Termius host entry accordingly.
 
 Only continue once this works! Then go to Hetzner dashboard and **remove port 22** from the firewall.
 
