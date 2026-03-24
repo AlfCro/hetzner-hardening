@@ -179,6 +179,19 @@ Once that works:
 2. **Remove the rule for port 22** — it is no longer needed and should not be open
 3. Add a rule for **TCP port 41122**
 
+### Get the scripts as `deploy`
+
+The repo you cloned earlier lives in `/root/`, which `deploy` cannot access. Clone it again into `deploy`'s home directory:
+
+```bash
+cd ~
+git clone https://github.com/AlfCro/hetzner-hardening.git
+cd hetzner-hardening/scripts
+chmod +x *.sh
+```
+
+You are now ready for Step 2. All remaining steps run from this directory.
+
 ---
 
 ## Step 2 — Host Firewall (UFW)
