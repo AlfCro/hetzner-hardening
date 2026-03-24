@@ -16,9 +16,9 @@ Step-by-step hardening scripts for a Hetzner Cloud VPS running Ubuntu 24.04. Bas
 ## Usage
 
 ```bash
-# On the server as root (connect via Termius)
+# SSH into server as root on port 22, then clone and run
 git clone https://github.com/AlfCro/hetzner-hardening.git
-cd VPS/scripts
+cd hetzner-hardening/scripts
 chmod +x *.sh
 
 # Run steps in order

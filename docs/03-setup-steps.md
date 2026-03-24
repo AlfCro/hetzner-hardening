@@ -9,12 +9,16 @@
 
 ## Getting the Scripts
 
+SSH into your server as `root` on port 22 using Termius (or any SSH client) with your Ed25519 key. Then clone this repo and prepare the scripts:
+
 ```bash
 # On the server as root
 git clone https://github.com/AlfCro/hetzner-hardening.git
-cd VPS/scripts
+cd hetzner-hardening/scripts
 chmod +x *.sh
 ```
+
+> **Note:** `git` is pre-installed on Ubuntu 24.04. If for some reason it is missing, run `apt update && apt install -y git` first.
 
 ---
 

@@ -116,13 +116,37 @@ Before connecting, create a firewall in the Hetzner dashboard:
 
 ## Getting the Scripts onto Your Server
 
-Connect to your new server as `root` on port 22 via Termius, then:
+Your server is running but empty. You need to pull down the hardening scripts from GitHub before you can do anything else. This is done over SSH — the same secure connection you will use to manage the server from now on.
+
+### 1. Connect to Your Server via SSH
+
+Open Termius and create a new host:
+
+- **Address:** your server's public IPv4 (shown in the Hetzner dashboard after creation)
+- **Username:** `root`
+- **Port:** `22`
+- **Key:** select the Ed25519 key you generated earlier
+
+Connect. You should see a root shell prompt. If the connection is refused, double-check that **TCP port 22 is open** in your Hetzner cloud firewall.
+
+### 2. Clone This Repository
+
+Once you are logged in as root, run:
 
 ```bash
 git clone https://github.com/AlfCro/hetzner-hardening.git
+```
+
+This downloads all the hardening scripts and documentation to a folder called `hetzner-hardening` in root's home directory.
+
+### 3. Navigate to the Scripts and Make Them Executable
+
+```bash
 cd hetzner-hardening/scripts
 chmod +x *.sh
 ```
+
+You are now ready to run Step 1. Everything from here on happens inside this `scripts` directory.
 
 ---
 
