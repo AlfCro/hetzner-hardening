@@ -2,6 +2,8 @@
 
 Step-by-step hardening scripts for a Hetzner Cloud VPS running Ubuntu 24.04. Based on the levelsio/Claude VPS hardening checklist.
 
+**New to this?** Start with the [plain-English setup guide](GUIDE.md) — it explains why each step matters and walks you through the full process from scratch.
+
 ## What's Included
 
 - Non-standard SSH port with key-only auth
@@ -15,7 +17,7 @@ Step-by-step hardening scripts for a Hetzner Cloud VPS running Ubuntu 24.04. Bas
 
 ```bash
 # On the server as root (connect via Termius)
-git clone https://github.com/AlfCro/VPS.git
+git clone https://github.com/AlfCro/hetzner-hardening.git
 cd VPS/scripts
 chmod +x *.sh
 

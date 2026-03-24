@@ -11,7 +11,7 @@
 
 ```bash
 # On the server as root
-git clone https://github.com/AlfCro/VPS.git
+git clone https://github.com/AlfCro/hetzner-hardening.git
 cd VPS/scripts
 chmod +x *.sh
 ```
