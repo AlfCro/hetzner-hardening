@@ -5,6 +5,7 @@ set -euo pipefail
 SSH_PORT=41122
 USERNAME="deploy"
 TAILSCALE_SUBNET="100.64.0.0/10"
+CLOUDFLARE_ONLY=false
 
 # --- Colors ---
 RED='\033[0;31m'

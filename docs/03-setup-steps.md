@@ -56,6 +56,8 @@ Only continue once this works! Then go to Hetzner dashboard and **remove port 22
 - Allows all Tailscale interface traffic
 - Rate limits SSH connections
 
+**Optional:** Set `CLOUDFLARE_ONLY=true` in `common.sh` to restrict ports 80/443 to Cloudflare IP ranges only. See [Firewall Strategy](02-firewall-strategy.md) for details.
+
 ---
 
 ## Step 3: Fail2Ban (as deploy)

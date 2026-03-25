@@ -112,6 +112,8 @@ Before connecting, create a firewall in the Hetzner dashboard:
 
 > **Why two firewalls?** The Hetzner cloud firewall sits outside your server — it drops packets before they even reach the OS. UFW (the second firewall you will set up in Step 2) runs inside the server. If one layer has a misconfiguration, the other still protects you. Defense in depth.
 
+> **Using Cloudflare?** If you put Cloudflare in front of your server, you can restrict ports 80/443 at the UFW level to only accept traffic from Cloudflare's IP ranges — see the Cloudflare note in Step 2 below. The Hetzner cloud firewall rules stay the same either way.
+
 ---
 
 ## Getting the Scripts onto Your Server
@@ -216,6 +218,17 @@ Sets the server's own firewall to deny everything by default, then only opens wh
 SSH connections are also rate-limited, which throttles scanners even if they do find your port.
 
 > Even if a future misconfiguration opens a port in the Hetzner cloud firewall, UFW is a second line of defense sitting right on the server.
+
+**Optional: Cloudflare-only mode**
+
+If you use Cloudflare as a reverse proxy in front of your server, ports 80 and 443 don't need to be open to the entire internet — only to Cloudflare's servers. To enable this:
+
+1. Open `scripts/common.sh` and set `CLOUDFLARE_ONLY=true`
+2. Run `./02-firewall.sh` — it will fetch Cloudflare's current IP ranges and create UFW rules that only allow traffic from those ranges on ports 80/443
+
+This means anyone who discovers your server's real IP and tries to connect directly on port 80 or 443 gets dropped. All legitimate traffic goes through Cloudflare first, which gives you DDoS protection, caching, and WAF rules for free.
+
+Cloudflare publishes their IP ranges at [cloudflare.com/ips](https://www.cloudflare.com/ips) and updates them occasionally. If you notice web traffic breaking, re-run the firewall script to refresh the rules.
 
 ---
 
