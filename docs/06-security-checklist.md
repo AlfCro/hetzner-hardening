@@ -7,6 +7,7 @@ Based on the levelsio/Claude VPS hardening checklist.
 - [x] Tailscale to make server invisible, lock SSH to Tailscale subnet
 - [x] Cloud-level firewall (Hetzner) AND host-level firewall (UFW) -- two independent layers
 - [x] Default deny all inbound, whitelist only what's needed
+- [x] Web app backends bind to 127.0.0.1 behind a reverse proxy; do not expose app ports directly
 - [x] Fail2ban watching the correct port (not default 22)
 - [x] Fail2ban bans set to 24h, not default 10 minutes
 - [x] Whitelist VPN/Tailscale subnet in fail2ban to prevent self-lockout

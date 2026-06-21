@@ -10,6 +10,9 @@ sudo ufw allow <port>/tcp comment 'description'
 # Firewall status
 sudo ufw status verbose
 
+# Confirm app backends are loopback-only
+sudo ss -ltnp | grep -E '127\.0\.0\.1:|Local Address'
+
 # Fail2ban status
 sudo fail2ban-client status sshd
 

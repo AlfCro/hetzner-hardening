@@ -45,3 +45,27 @@ If you use Cloudflare as a reverse proxy, you can restrict ports 80 and 443 to o
 - The Hetzner Cloud Firewall (Layer 1) still allows 80/443 from anywhere — this is fine because UFW (Layer 2) handles the Cloudflare restriction. The dual-layer approach means either layer can be more permissive than the other.
 - Cloudflare publishes their IP ranges at [cloudflare.com/ips](https://www.cloudflare.com/ips). They update these occasionally. If you notice connectivity issues, re-run the firewall script to refresh the rules.
 - If you ever stop using Cloudflare, set `CLOUDFLARE_ONLY=false` and re-run the script, or your web traffic will break.
+
+## Hosting Web Apps Safely
+
+If this VPS later runs application backends behind a reverse proxy such as Caddy
+or Nginx, keep those app processes bound to `127.0.0.1` and proxy to them over
+loopback. Do not open app ports such as `3000`, `5000`, `5080`, or `8000` in
+Hetzner Firewall or UFW unless there is a specific, reviewed reason.
+
+The public firewall surface should stay limited to:
+
+- `41122/tcp` for SSH
+- `80/tcp` for HTTP and ACME challenges
+- `443/tcp` for HTTPS
+- `41641/udp` for Tailscale, if using the Hetzner cloud firewall rule
+
+Verification commands:
+
+```bash
+sudo ss -ltnp
+sudo ufw status verbose
+```
+
+For a loopback-only backend, `ss` should show the app listening on
+`127.0.0.1:<port>`, not `0.0.0.0:<port>` or `*:<port>`.
