@@ -39,4 +39,10 @@ sudo crontab -l
 
 # Check unattended upgrade logs
 cat /var/log/unattended-upgrades/unattended-upgrades.log
+
+# Persistent session — survives SSH drops; use instead of mosh (no UDP port to open)
+tmux new -A -s cc    # start or reattach the shared "cc" session
+tmux attach -t cc    # reattach
+# detach (leaves work running): Ctrl-b then d
+# fix scrollback (wheel/touch) — add to ~/.tmux.conf once:  set -g mouse on
 ```

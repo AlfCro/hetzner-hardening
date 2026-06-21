@@ -69,3 +69,41 @@ sudo ufw status verbose
 
 For a loopback-only backend, `ss` should show the app listening on
 `127.0.0.1:<port>`, not `0.0.0.0:<port>` or `*:<port>`.
+
+## Remote Sessions: tmux, Not mosh
+
+Long-lived SSH work (AI coding agents, builds, migrations) should run inside a
+persistent `tmux` session so a dropped connection *detaches* the work instead of
+killing it. `tmux` is installed by step 1.
+
+Do **not** reach for `mosh` to paper over flaky connections: mosh needs a UDP
+port range (60000–61000) opened, which directly contradicts the deny-by-default
+firewall this repo enforces. `tmux` over the existing `41122/tcp` SSH gives the
+same resilience without widening the firewall — a session-persistence need is
+never a reason to open a port.
+
+This is not hypothetical with mobile SSH clients such as Termius: backgrounding
+the app on Android resets the connection and SIGHUPs the foreground process,
+aborting any in-flight command. Inside tmux the session survives the drop.
+
+```bash
+# Start or reattach a shared persistent session named "cc"
+tmux new -A -s cc
+
+# Detach (leaves work running):  Ctrl-b, then d
+# Reattach later:
+tmux attach -t cc
+```
+
+By default tmux captures the scroll wheel, so mouse/touch scrollback through past
+output silently does nothing — easy to miss, and especially annoying on a mobile
+client. Enable mouse mode once in `~/.tmux.conf` (wheel/touch scroll, pane select,
+resize):
+
+```bash
+# ~/.tmux.conf
+set -g mouse on
+```
+
+Reload an existing session with `tmux source-file ~/.tmux.conf`; new sessions pick
+it up automatically.
