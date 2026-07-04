@@ -6,6 +6,19 @@
 
 ---
 
+### 2026-07-04 · 🔴 [devops][gotcha] Audit effective hardening state, not intended files
+
+The cronmalm posture review found documented-vs-effective drift: this repo's
+docs and `scripts/03-fail2ban.sh` promised 24-hour sshd bans, `maxretry = 3`,
+and the Tailscale `100.64.0.0/10` ignore range, but the live box had no
+`/etc/fail2ban/jail.local`, so fail2ban was running Debian defaults (600-second
+bans, `maxretry = 5`, no ignore list). The audit only checked that fail2ban was
+running, so it missed the weaker effective policy. Fix: `06-audit.sh` now asks
+fail2ban for the live sshd jail values (`bantime`, `maxretry`, `ignoreip`) and
+flags drift directly. Also note that `systemctl restart fail2ban` can return
+before the fail2ban socket is ready; scripts that query it immediately should
+wait for `fail2ban-client ping`.
+
 ### 2026-06-21 · 🟡 [devops][gotcha] Use tmux for long sessions, not mosh — mosh would breach the firewall
 
 Long AI coding / build sessions kept dying when the operator's mobile SSH client

@@ -41,10 +41,35 @@ echo ""
 echo "--- Fail2Ban Status ---"
 if systemctl is-active --quiet fail2ban; then
     ok "Fail2ban is running"
-    BANNED=$(sudo fail2ban-client status sshd 2>/dev/null | grep "Currently banned" | awk '{print $NF}')
-    echo "    Currently banned IPs: ${BANNED:-0}"
-    TOTAL=$(sudo fail2ban-client status sshd 2>/dev/null | grep "Total banned" | awk '{print $NF}')
-    echo "    Total banned (all time): ${TOTAL:-0}"
+    if sudo fail2ban-client status sshd >/dev/null 2>&1; then
+        BANNED=$(sudo fail2ban-client status sshd 2>/dev/null | grep "Currently banned" | awk '{print $NF}')
+        echo "    Currently banned IPs: ${BANNED:-0}"
+        TOTAL=$(sudo fail2ban-client status sshd 2>/dev/null | grep "Total banned" | awk '{print $NF}')
+        echo "    Total banned (all time): ${TOTAL:-0}"
+
+        SSHD_BANTIME=$(sudo fail2ban-client get sshd bantime 2>/dev/null || true)
+        if [ "$SSHD_BANTIME" = "86400" ]; then
+            ok "sshd jail bantime: ${SSHD_BANTIME}s"
+        else
+            fail "sshd jail bantime drift: ${SSHD_BANTIME:-unknown} (expected 86400)"
+        fi
+
+        SSHD_MAXRETRY=$(sudo fail2ban-client get sshd maxretry 2>/dev/null || true)
+        if [ "$SSHD_MAXRETRY" = "3" ]; then
+            ok "sshd jail maxretry: ${SSHD_MAXRETRY}"
+        else
+            fail "sshd jail maxretry drift: ${SSHD_MAXRETRY:-unknown} (expected 3)"
+        fi
+
+        SSHD_IGNOREIP=$(sudo fail2ban-client get sshd ignoreip 2>/dev/null || true)
+        if echo "$SSHD_IGNOREIP" | grep -q "100.64.0.0/10"; then
+            ok "sshd jail ignores Tailscale subnet"
+        else
+            fail "sshd jail ignoreip missing Tailscale subnet 100.64.0.0/10"
+        fi
+    else
+        fail "sshd jail is not available"
+    fi
 else
     fail "Fail2ban is NOT running!"
 fi

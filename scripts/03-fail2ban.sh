@@ -24,6 +24,14 @@ EOF
 sudo systemctl enable fail2ban
 sudo systemctl restart fail2ban
 
+for _ in {1..20}; do
+    if sudo fail2ban-client ping >/dev/null 2>&1; then
+        break
+    fi
+    sleep 0.5
+done
+sudo fail2ban-client ping >/dev/null
+
 echo ""
 echo "Fail2ban status:"
 sudo fail2ban-client status
