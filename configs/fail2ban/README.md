@@ -36,3 +36,22 @@ The filter was tested against logs like:
 
 Fail2ban parses the leading epoch timestamp separately, so the regex matches
 the post-date line body beginning with `: New connection ...`.
+
+## Caddy Auth-Failure Jail
+
+Use `caddy-auth.conf` and `caddy-auth.local.example` for Caddy JSON access logs
+where protected endpoints return repeated `401` or `403` responses. The tested
+pattern expects Caddy's current JSON field names:
+
+```json
+{"ts":1783162589.2277133,"request":{"remote_ip":"65.21.3.33",...},"status":401,...}
+```
+
+The filter uses `datepattern = "ts":{EPOCH}` because Caddy's timestamp is
+inside the JSON object rather than at the beginning of the line. If your Caddy
+version logs `remote_addr` instead of `remote_ip`, change the filter and retest
+with `fail2ban-regex` before enabling the jail.
+
+The example policy is gentler than SSH: 10 failures in 10 minutes earns a
+1-hour ban. This avoids punishing normal browser retries while still throttling
+credential stuffing through app login surfaces.
