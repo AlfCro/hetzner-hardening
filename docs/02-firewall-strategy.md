@@ -70,6 +70,25 @@ sudo ufw status verbose
 For a loopback-only backend, `ss` should show the app listening on
 `127.0.0.1:<port>`, not `0.0.0.0:<port>` or `*:<port>`.
 
+## Non-HTTP Public Listeners
+
+Some services cannot sit behind an HTTP reverse proxy. Examples include MQTT,
+SMTP, or any protocol where a device connects directly to a TLS listener. These
+are deliberate exceptions to the "only 80/443/SSH/Tailscale" public surface, and
+they need extra edge throttling in the same change that opens the port.
+
+For credential-bearing TCP listeners, prefer `ufw limit` over `ufw allow`:
+
+```bash
+sudo ufw limit 8883/tcp comment 'MQTT TLS rate-limited'
+```
+
+`ufw limit` allows normal persistent clients but rate-limits new connections
+from the same source (6 connection attempts per 30 seconds). That matters
+because most password guessing against protocols like MQTT requires a fresh TCP
+connection per attempt. Pair this with a service-specific fail2ban jail whenever
+the service writes source IPs or connection attempts to a log.
+
 ## Remote Sessions: tmux, Not mosh
 
 Long-lived SSH work (AI coding agents, builds, migrations) should run inside a

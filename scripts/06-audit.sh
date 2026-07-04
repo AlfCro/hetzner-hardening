@@ -30,7 +30,7 @@ echo "--- Firewall Status ---"
 if sudo ufw status | grep -q "Status: active"; then
     ok "UFW is active"
     echo "    Open ports:"
-    sudo ufw status | grep ALLOW | while read -r line; do
+    sudo ufw status | grep -E "ALLOW|LIMIT" | while read -r line; do
         echo "      $line"
     done
 else
