@@ -1,0 +1,10 @@
+[mosquitto-auth]
+enabled  = true
+port     = 8883
+filter   = mosquitto-auth
+logpath  = /var/log/mosquitto/mosquitto.log
+backend  = auto
+maxretry = 20
+findtime = 120
+bantime  = 86400
+ignoreip = 127.0.0.1/8 ::1 100.64.0.0/10
