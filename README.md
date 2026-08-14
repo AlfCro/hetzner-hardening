@@ -45,3 +45,14 @@ chmod +x *.sh
 | [Tailscale & Dev](docs/04-tailscale-and-dev.md) | Tailscale for Expo dev, VNC tunneling |
 | [Quick Reference](docs/05-quick-reference.md) | Common admin commands |
 | [Security Checklist](docs/06-security-checklist.md) | Full hardening checklist |
+
+## Project & Agent Docs
+
+| Doc | Description |
+|-----|-------------|
+| [AGENTS.md](AGENTS.md) | Entry point for AI coding agents — read first |
+| [PROJECT.md](PROJECT.md) | Architecture, tech stack, constraints, decisions |
+| [agents/workplan.md](agents/workplan.md) | Live roadmap and next steps |
+| [agents/status.md](agents/status.md) | Append-only worklog |
+| [agents/lessons.md](agents/lessons.md) | Gotchas and conventions learned |
+| [agents/plans/](agents/plans/) | Focused implementation plans (`NN-<name>.md`) |

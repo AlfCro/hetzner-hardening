@@ -6,6 +6,19 @@
 
 ---
 
+### 2026-08-14 · 🟢 [devops][pattern] Agent docs live under `agents/`
+
+This repo follows the same handoff layout as `~/cronmalm-server`: root
+`AGENTS.md` is the entry point, `agents/workplan.md` is the live roadmap,
+`agents/status.md` is the append-only worklog, `agents/lessons.md` (this file)
+holds gotchas, and focused plans go in `agents/plans/NN-<name>.md` linked from
+the workplan. `WORKPLAN.md` and `LESSONS.md` used to sit in the repo root —
+they were moved with `git mv` on 2026-08-14, so old paths in commit messages
+and in `cronmalm-server`'s append-only `status.md` still refer to the root
+names. `CLAUDE.md` and `GEMINI.md` stay as immutable pointer stubs to
+`AGENTS.md`. Both repos are worked on in the same sessions, so keeping one
+layout means an agent looks in the same places whichever repo it lands in.
+
 ### 2026-07-04 · 🔴 [devops][gotcha] Audit effective hardening state, not intended files
 
 The cronmalm posture review found documented-vs-effective drift: this repo's
